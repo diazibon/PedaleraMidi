@@ -2,6 +2,9 @@
 
 SoftwareSerial portOne(8, 9);
 
+int Tecla[12];
+bool TeclaOn[] = {0,0,0,0,0,0,0,0,0,0,0,0};
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(2, INPUT_PULLUP);
@@ -26,12 +29,12 @@ void loop() {
   //read the pushbutton value into a variable
   int Octava=2;
   
-  int Tecla[12];
+  
   for (int x=0;x=11;x++){
     Tecla[x]=digitalRead(x+2);
   }
 
-  bool TeclaOn[] = {0,0,0,0,0,0,0,0,0,0,0,0};
+  
 
 
   for (int x=0;x=11;x++){
@@ -43,11 +46,11 @@ void loop() {
         TeclaOn[x]=true;
         //Serial.println("144,46,100");
       }
-  } else {
-        Serial.write(144);//send note on or note off command 
-        Serial.write((Octava*12)+x+10);//send pitch data
-        Serial.write(byte(0));//send velocity data    
+  } else {  
         if (TeclaOn[x]==true){
+          Serial.write(144);//send note on or note off command 
+          Serial.write((Octava*12)+x+10);//send pitch data
+          Serial.write(byte(0));//send velocity data
           TeclaOn[x]=false;
           //Serial.println("128,46,0");
         }
