@@ -21,8 +21,8 @@ void setup() {
   pinMode(12, INPUT_PULLUP);
   pinMode(13, INPUT_PULLUP);
                         
-  Serial.begin(9600);
-  portOne.begin(31250);
+  Serial.begin(31250);
+  //portOne.begin(31250);
 }
 
 void loop() {
@@ -31,16 +31,16 @@ void loop() {
   int octava=2;
   
   
-  for (int x=0;x=teclaOnLength-1;x++){
+  for (int x=0;x<=teclaOnLength-1;x++){
     tecla[x]=digitalRead(x+2);
   }
 
   
-  for (int x=0;x=teclaOnLength-1;x++){
+  for (int x=0;x<=teclaOnLength-1;x++){
     if (tecla[x] == LOW) {
       if (teclaOn[x]==false){  
         Serial.write(144);//send note on or note off command 
-        Serial.write((octava*12)+x+10);//send pitch data
+        Serial.write(octava*12+x);//send pitch data
         Serial.write(100);//send velocity data
         teclaOn[x]=true;
         //Serial.println("144,46,100");
@@ -48,11 +48,11 @@ void loop() {
   } else {  
         if (teclaOn[x]==true){
           Serial.write(144);//send note on or note off command 
-          Serial.write((octava*12)+x+10);//send pitch data
+          Serial.write(octava*12+x);//send pitch data
           Serial.write(byte(0));//send velocity data
           teclaOn[x]=false;
           //Serial.println("128,46,0");
         }
       }
-  } 
+  }
 }
